@@ -1,0 +1,59 @@
+import paciente.* 
+
+describe "Testign de personas"{
+
+	const leonardo = new Paciente (edad=40,nivelDeDolor=10,nivelDeFortaleza=20)
+    const milena = new Paciente (edad=3,nivelDeDolor=30,nivelDeFortaleza=50)
+    
+    const magneto = new Magneto ()
+    const bicicleta = new Bicicleta()
+    const minitramp = new Minitramp()
+    
+    
+    test "Leonardo puede usar el magneto"{
+    	assert.that(leonardo.puedeUsar(magneto))
+    }
+    test "Leonardo puede usar el bicicleta"{
+    	assert.that(leonardo.puedeUsar(bicicleta))
+    }
+    test "Leonardo puede usar el minitramp"{
+    	assert.that(leonardo.puedeUsar(minitramp))
+    }
+    test "Milena puede usar el magneto"{
+    	assert.that(milena.puedeUsar(magneto))
+    }
+    test "Milena no puede usar la bicicleta"{
+    	assert.notThat(milena.puedeUsar(bicicleta))
+    }
+    test "Milena no puede usar el minitramp"{
+    	assert.notThat(milena.puedeUsar(minitramp))
+    }
+    test "Leonardo usa el magneto y el nivel de dolor baja a 9"{
+    	leonardo.usarAparato(magneto)
+    	assert.equals(9,leonardo.nivelDeDolor())
+    }
+    test "Milena usa el magneto y el nivel de dolor baja a 27"{
+    	milena.usarAparato(magneto)
+    	assert.equals(27,milena.nivelDeDolor())
+    }
+    test "Leonardo usa la bicicleta, el nivel de dolor baja a 6 y la fotaleza sube a 23"{
+    	leonardo.usarAparato(bicicleta)
+    	assert.equals(6, leonardo.nivelDeDolor())
+    	assert.equals(23,leonardo.nivelDeFortaleza())
+    }
+    test "Leonardo usa el minitramp la fortaleza sube a 24"{
+    	leonardo.usarAparato(minitramp)
+    	assert.equals(24,leonardo.nivelDeFortaleza())
+    }
+    test "Leonardo realiza rutina, su nivel de dolor baja a 1.8 y su fortaleza sube a 30"{
+    	leonardo.agregarAparatos([bicicleta,minitramp,bicicleta,magneto])
+    	assert.that(leonardo.puedeRealizarRutina())
+    	leonardo.realizarRutina()
+        assert.equals(1.8,leonardo.nivelDeDolor())
+        assert.equals(30,leonardo.nivelDeFortaleza())
+    }
+    test "Milena no puede hacer la rutina que tiene asignada"{
+    	milena.agregarAparatos([magneto,bicicleta])
+    	assert.notThat(milena.puedeRealizarRutina())
+    }
+}
